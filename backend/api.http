@@ -26,3 +26,46 @@ Content-Type: application/json
 {
     "email_user": "joseasantana05@gmail.com"
 }
+
+### Verify a user token
+POST http://localhost:6200/api/users/Verify
+
+### Get all notes for a user
+GET http://localhost:6200/api/notes/all/1
+
+### Get a single note by ID
+GET http://localhost:6200/api/notes/2
+
+### Get all favorite notes for a user
+GET http://localhost:6200/api/notes/favorites/1
+
+### Create a new note
+POST http://localhost:6200/api/notes/create/1
+Content-Type: application/json
+
+{
+    "title_notes": "Second Note",
+    "description_notes": "This is my first note",
+    "tags_notes": "personal, work",
+    "date_notes": "2024-10-01"
+}
+
+### Update a note
+PATCH http://localhost:6200/api/notes/update/1
+Content-Type: application/json
+
+{
+    "title_notes": "Updated Note Title 2",
+    "description_notes": "This is the updated description of my note.",
+    "tags_notes": "updated, personal",
+    "date_notes": "2024-10-02"
+}
+
+### Delete a note
+DELETE http://localhost:6200/api/notes/delete/1
+
+### Make a note favorite
+PATCH http://localhost:6200/api/notes/favorite/2
+
+### unmake a note favorite
+PATCH http://localhost:6200/api/notes/unfavorite/2

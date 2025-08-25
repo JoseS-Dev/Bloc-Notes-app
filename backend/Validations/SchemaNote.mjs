@@ -1,4 +1,4 @@
-import zod from 'zod';
+import zod, { date } from 'zod';
 
 // Define the schema for notes validation
 export const SchemaNotes = zod.object({
@@ -14,9 +14,9 @@ export const SchemaNotes = zod.object({
         required_error: 'The tags are required',
         invalid_type_error: 'The tags must be a string'
     }),
-    slug_notes: zod.string({
-        required_error: 'The slug is required',
-        invalid_type_error: 'The slug must be a string'
+    date_notes: zod.string({
+        required_error: 'The date is required',
+        invalid_type_error: 'The date must be a string'
     })
 })
 
