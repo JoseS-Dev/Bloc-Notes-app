@@ -5,19 +5,17 @@ dotenv.config();
 
 // Added the token for the user
 export function GenerateToken(user){
-    if(user){
-        try{
-            const token = jwt.sign(
-                {id_user: user.id_user, email_user: user.email_user},
-                process.env.JWT_SECRET,
-                {expiredIn: '1h'}
-            )
-            return token;
-        }
-        catch(error){
-            console.log("Error generating token", error);
-            return null;
-        }
+    try{
+        const token = jwt.sign(
+            {id_user: user.id_user, email_user: user.email_user},
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'}
+        )
+        return token;
+    }
+    catch(error){
+        console.log("Error generating token", error);
+        return null;
     }
 }
 

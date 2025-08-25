@@ -24,7 +24,23 @@ export const SchemaUser = zod.object({
     }).max(12)
 });
 
+// define the schema for the login user
+export const SchemaLoginUser = zod.object({
+    email_user: zod.string({
+        required_error: 'The email is required',
+        invalid_type_error: 'The email must be a string'
+    }),
+    password_user: zod.string({
+        required_error: 'The password is required',
+        invalid_type_error: 'The password must be a string'
+    }).max(12)
+});
+
 // Function to the validate data user
 export function ValidateDataUser(data){
     return SchemaUser.safeParse(data);
+}
+// Function to the validate data login user
+export function ValidateDataLoginUser(data){
+    return SchemaLoginUser.safeParse(data);
 }

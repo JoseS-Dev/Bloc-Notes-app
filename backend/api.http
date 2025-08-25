@@ -9,3 +9,20 @@ Content-Type: application/json
     "password_user": "JSa06...",
     "username": "JoseS-Dev"
 }
+
+### Login a user
+POST http://localhost:6200/api/users/Login
+Content-Type: application/json
+
+{
+    "email_user": "joseasantana05@gmail.com",
+    "password_user": "JSa06..."
+}
+
+### Logout a user
+POST http://localhost:6200/api/users/Logout
+Content-Type: application/json
+
+{
+    "email_user": "joseasantana05@gmail.com"
+}
