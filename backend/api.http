@@ -1,0 +1,11 @@
+### Register a new user
+POST http://localhost:6200/api/users/Register
+Content-Type: application/json
+
+{
+    "name_user": "Jose Angel",
+    "last_name": "Santana",
+    "email_user": "joseasantana05@gmail.com",
+    "password_user": "JSa06...",
+    "username": "JoseS-Dev"
+}
