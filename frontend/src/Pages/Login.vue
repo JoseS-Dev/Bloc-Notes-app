@@ -14,10 +14,10 @@
                 <h3 class="text-2xl tracking-normal font-bold">Inicio de Sesión</h3>
             </div>
             <div class="border-b-2 border-blue-600 w-full h-2/6 p-2 flex flex-col justify-center">
-                <label for="email_user" class="border-b-2 border-gray-300 w-full tracking-wide text-xl font-bold">Email:</label>
+                <label for="email_user" class="w-full tracking-wide text-xl font-bold">Email:</label>
                 <input
                     type="email"
-                    class="border-b-2 border-r-2 border-gray-300 w-full h-16 text-lg px-3 
+                    class="border-b-2 border-r-2 border-t-2 border-gray-300 w-full h-16 text-lg px-3 
                     hover:border-blue-500 focus:border-blue-500 outline-none transition-all duration-200
                     placeholder-gray-200"
                     v-model="email_user"
@@ -26,10 +26,10 @@
                 />
             </div>
             <div class="border-b-2 border-blue-600 w-full h-2/6 p-2 flex flex-col justify-center">
-                <label for="password_user" class="border-b-2 border-gray-300 w-full tracking-wide text-xl font-bold">Password:</label>
+                <label for="password_user" class="w-full tracking-wide text-xl font-bold">Password:</label>
                 <input
                     type="password"
-                    class="border-b-2 border-r-2 border-gray-300 border- w-full h-16 text-lg px-3 
+                    class="border-b-2 border-r-2 border-t-2 border-gray-300 w-full h-16 text-lg px-3 
                     hover:border-blue-500 focus:border-blue-500 outline-none transition-all duration-200
                     placeholder-gray-200"
                     v-model="password_user"
