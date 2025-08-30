@@ -1,5 +1,11 @@
-<script setup lang='ts'></script>
+<script setup lang='ts'>
+    import SideNotes from '../components/SideNotes.vue';
+    import CardNotes from '../components/CardNotes.vue';
+</script>
 
 <template>
-    <h2 class="text-2xl text-gray-600">Home Pages</h2>
+    <main class="w-full h-screen flex">
+        <SideNotes title="Notas" content="Contenido de las notas" />
+        <CardNotes title="Vista Previa" content="Contenido de la vista previa"/>
+    </main>
 </template>

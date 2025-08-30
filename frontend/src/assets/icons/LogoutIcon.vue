@@ -1,0 +1,10 @@
+<script setup lang="ts"></script>
+
+<template>
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+    class="lucide lucide-log-out-icon lucide-log-out hover:stroke-blue-600 hover:scale-105 cursor-pointer transition-transform duration-200">
+        <path d="m16 17 5-5-5-5"/>
+        <path d="M21 12H9"/>
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+    </svg>
+</template>
