@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
+import { useAuthUserStore } from "../Store/authUserStore";
 
 import Home from "../Pages/Home.vue";
 import Login from "../Pages/Login.vue";
@@ -16,7 +17,8 @@ const router = createRouter({
         {
             path: '/home',
             name: "Home",
-            component: Home
+            component: Home,
+            meta: {requiresAuth: true}
         },
         {
             path: '/register',
@@ -26,9 +28,15 @@ const router = createRouter({
         {
             path: '/settings',
             name: "Settings",
-            component: Settings
+            component: Settings,
+            meta: {requiresAuth: true}
         }
     ]
 })
+router.beforeEach((to) => {
+    const authUserStore = useAuthUserStore();
+    if(to.meta.requiresAuth && !authUserStore.isAuthenticated) return '/';
+})
+
 
 export default router;

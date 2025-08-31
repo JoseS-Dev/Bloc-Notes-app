@@ -4,7 +4,7 @@ import type { UserData } from "../Types/User";
 
 export const useAuthUserStore = defineStore("auth", () => {
     const user = ref(JSON.parse(localStorage.getItem("user") || "null"));
-    const token = ref(JSON.parse(localStorage.getItem("token") || "null"));
+    const token = ref(localStorage.getItem("token"));
 
     // Verificación de usuario autenticado
     const isAuthenticated = computed(() => !!token.value || !!user.value);
@@ -15,7 +15,7 @@ export const useAuthUserStore = defineStore("auth", () => {
         user.value = newUser;
         token.value = newToken;
         localStorage.setItem("user", JSON.stringify(newUser));
-        localStorage.setItem("token", JSON.stringify(newToken));
+        localStorage.setItem("token", newToken);
     }
 
     // Funcion que limpia el usuario y el token

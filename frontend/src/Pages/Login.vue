@@ -2,11 +2,13 @@
     import {ref} from 'vue';
     import { LoginUser } from '../Services/User';
     import { useRouter } from 'vue-router';
+    import { useAuthUserStore } from '../Store/authUserStore';
     import Swal from 'sweetalert2';
     // References
     const email_user = ref('');
     const password_user = ref('');
     const router = useRouter();
+    const authUserStore = useAuthUserStore();
 
     // Function to handle for the login of user
     const handleLogin = async (e:Event) => {
@@ -23,7 +25,7 @@
                     title: 'Inicio de sesión exitoso',
                     text: `Bienvenido de nuevo ${response.data.name_user}`
                 })
-                localStorage.setItem('user', JSON.stringify(response.data));
+                authUserStore.setAuthData(response.data, response.token);
                 router.push('/home');
             }
         }

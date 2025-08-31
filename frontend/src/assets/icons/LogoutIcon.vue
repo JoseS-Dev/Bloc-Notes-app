@@ -1,9 +1,11 @@
 <script setup lang="ts">
     import { LogoutUser } from '../../Services/User';
     import { useRouter } from 'vue-router';
+    import { useAuthUserStore } from '../../Store/authUserStore';
     import Swal from 'sweetalert2';
     const emailUser = JSON.parse(localStorage.getItem('user') || '{}').email_user;
     const router = useRouter();
+    const authUserStore = useAuthUserStore();
 
     // Function to handle to logout a user
     const handleLogout = async (e: Event) => {
@@ -17,7 +19,7 @@
                     title: 'Cierre de sesión exitoso',
                     text: `Vuelve pronto!`
                 })
-                localStorage.removeItem('userEmail');
+                authUserStore.clearAuthData();
                 router.push('/');
             }
         }
