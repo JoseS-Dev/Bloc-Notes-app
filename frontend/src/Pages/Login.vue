@@ -20,12 +20,14 @@
         try{
             const response = await LoginUser(FormData);
             if(response.data){
+                console.log(response.token)
                 await Swal.fire({
                     icon: 'success',
                     title: 'Inicio de sesión exitoso',
                     text: `Bienvenido de nuevo ${response.data.name_user}`
                 })
                 authUserStore.setAuthData(response.data, response.token);
+                
                 router.push('/home');
             }
         }

@@ -58,3 +58,22 @@ export async function LogoutUser(email_user: string){
         throw error;
     }
 }
+
+// function que verifica que el usuario esta autenticado
+export async function VerifyToken(token: string){
+    try{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/Verify`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(!response.ok) throw new Error('Error en la solicitud');
+        const result = await response.json();
+        return result;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

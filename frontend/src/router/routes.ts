@@ -1,6 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
 import { useAuthUserStore } from "../Store/authUserStore";
-
 import Home from "../Pages/Home.vue";
 import Login from "../Pages/Login.vue";
 import Register from "../Pages/Register.vue";
@@ -33,9 +32,13 @@ const router = createRouter({
         }
     ]
 })
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
     const authUserStore = useAuthUserStore();
-    if(to.meta.requiresAuth && !authUserStore.isAuthenticated) return '/';
+    if(to.meta.requiresAuth){
+        const isAuthenticated = await authUserStore.checkAuth();
+        if(!isAuthenticated) return '/';
+    }
+    
 })
 
 
