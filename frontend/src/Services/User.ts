@@ -2,7 +2,7 @@ import type { UserData, loginData } from "../Types/User";
 // Función para registrar un usuario
 export async function registerUser(data: UserData){
     try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/register`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/Register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -11,7 +11,7 @@ export async function registerUser(data: UserData){
         })
         if(!response.ok) throw new Error('Error en la solicitud');
         const result = await response.json();
-        return result.data;
+        return result;
     } 
     catch (error) {
         console.error(error);
@@ -22,7 +22,7 @@ export async function registerUser(data: UserData){
 // Funcion para el login del usuario
 export async function LoginUser(data: loginData){
     try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/Login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export async function LoginUser(data: loginData){
         })
         if(!response.ok) throw new Error('Error en la solicitud');
         const result = await response.json();
-        return result.data;
+        return result;
     } 
     catch (error) {
         console.error(error);
@@ -40,9 +40,9 @@ export async function LoginUser(data: loginData){
 }
 
 // Función para cerrar sesión
-export async function LogoutUser(email_user:string){
+export async function LogoutUser(email_user: string){
     try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/Logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export async function LogoutUser(email_user:string){
         })
         if(!response.ok) throw new Error('Error en la solicitud');
         const result = await response.json();
-        return result.data;
+        return result;
     }
     catch (error) {
         console.error(error);

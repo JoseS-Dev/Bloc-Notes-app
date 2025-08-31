@@ -7,6 +7,7 @@ dotenv.config();
 const transporter = createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
+    secure: false,
     port: 587,
     auth: {
         user: process.env.EMAIL_USER,
@@ -18,10 +19,10 @@ const transporter = createTransport({
 export const sendEmail = (req, res, next) => {
     const emailOptions = {
         from: process.env.EMAIL_USER,
-        to: req.body.email,
+        to: req.body.email_user,
         subject: 'Bloc Notes - Registration',
         html: `
-        <h1>Welcome to bloc Notes ${req.body.name}</h1>
+        <h1>Welcome to bloc Notes ${req.body.name_user}</h1>
         <p>This Bloc Notes is a simple app that allows you to create, edit and delete notes.</p>
         <p>You can also create categories to organize your notes.</p>
         <p>We hope you enjoy using our app!</p>

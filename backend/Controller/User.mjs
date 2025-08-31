@@ -11,7 +11,10 @@ export class ControllerUser {
             if(!result.success) return res.status(400).json({message: result.message});
             const register = await this.ModelUsers.registerUser({user: result.data});
             if(register){
-                return res.status(201).json({message: register.message});
+                return res.status(201).json({
+                    message: 'User registered successfully',
+                    data: register
+                });
             }
         }
         catch(error){

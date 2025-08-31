@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import AllIcon from '../assets/icons/Allicon.vue';
+    import AllIcon from '../assets/icons/AllIcon.vue';
     import FavoritesIcon from '../assets/icons/FavoritesIcon.vue';
     import LogoutIcon from '../assets/icons/LogoutIcon.vue';
     import { defineProps } from 'vue';

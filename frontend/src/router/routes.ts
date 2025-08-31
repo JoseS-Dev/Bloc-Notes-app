@@ -6,7 +6,7 @@ import Register from "../Pages/Register.vue";
 import Settings from "../Pages/Settings.vue";
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(`${import.meta.env.BASE_URL}`),
     routes: [
         {
             path: '/',

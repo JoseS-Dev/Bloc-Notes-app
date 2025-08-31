@@ -19,7 +19,9 @@ export class ModelUsers {
             [name_user, last_name, username, email_user, hashedPassword]
         )
         if(createUser.rowCount === 0) return {message: 'Error creating the user'};
-        return {message: 'User created successfully'}
+        console.log("User register successfully");
+        const {password_user: _, ...userWithoutPassword} = user;
+        return userWithoutPassword;
     }
 
     // Login of the user
@@ -56,8 +58,11 @@ export class ModelUsers {
                 }
                 console.log("User logged in successfully");
                 const {password_user: _, ...userWithoutPassword} = existingUser.rows[0];
-                return userWithoutPassword;
-                
+                return {
+                    id_user: existingUser.rows[0]?.id_user,
+                    ...userWithoutPassword
+                };
+
             }
         }
         return {message: 'The email not found or the password is incorrect'};
@@ -86,6 +91,7 @@ export class ModelUsers {
             [false, userid]
         )
         if(logout.rowCount === 0) return {message: 'Error logging out the user'};
+        console.log("User logged out successfully");
         return {message: 'User logged out successfully'};
     }
 }
