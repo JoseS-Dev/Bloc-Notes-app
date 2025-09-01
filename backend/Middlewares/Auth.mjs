@@ -21,8 +21,11 @@ export function GenerateToken(user){
 
 // Verify if the token is valid
 export const verifiyMiddlware = (req, res, next) => {
-    const authHeader = req.headers.autorization;
-    if(!authHeader || authHeader.startsWith('Bearer ')){
+    console.log('Cabecera', req.headers)
+    console.log("Authorization Header:", req.headers.authorization)
+    const authHeader = req.headers.authorization;
+    if(!authHeader || !authHeader.startsWith('Bearer ')){
+        console.log("Error: No token provided");
         return res.status(401).json({message: 'No token provided'});
     }
     const token = authHeader.split(' ')[1];

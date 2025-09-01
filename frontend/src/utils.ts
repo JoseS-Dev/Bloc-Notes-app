@@ -25,3 +25,9 @@ export function ValidateDataRegister(data: UserData){
         message: 'Datos válidos'
     }
 }
+
+// Function para separar los tags de las notas
+export function SeparateTags(tags: string){
+    if(!tags) return [];
+    return tags.split(',').map(tag => tag.trim());
+}

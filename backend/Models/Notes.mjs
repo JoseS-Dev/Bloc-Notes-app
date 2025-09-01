@@ -131,42 +131,24 @@ export class ModelNotes {
     }
 
     // Mark a note as favorite
-    static async toggleFavorite({id_notes}){
-        if(!id_notes) return {message: 'Note ID and is_favorite are required'};
+    static async toggleFavorite({id_notes, is_favorite}){
+        if(!id_notes) return {message: 'Note ID is required'};
+        if(is_favorite === undefined || is_favorite === null) return {message: 'is_favorite value is required'};
+
         // Check if the note exists
         const checkNote = await connection.query(
             `SELECT * FROM notes WHERE id_notes = $1`,
             [id_notes]
         )
         if(checkNote.rowCount > 0){
+            console.log("Process to update favorite status");
             const result = await connection.query(
-                `UPDATE notes SET is_favorite = true WHERE id_notes = $1 RETURNING *`,
-                [id_notes]
-            );
+                `UPDATE notes SET is_favorite = $1 WHERE id_user = $2`,
+                [is_favorite, id_notes]
+            )
             if(result.rowCount <= 0) return {message: 'Error updating favorite status'};
-            console.log("Note favorite status updated");
-            return result.rows[0];
+            return {message: 'Favorite status updated'};
         }
-        return {message: 'Note does not exist'};
     }
 
-    // unmark a note as favorite
-    static async toggleUnfavorite({id_notes}){
-        if(!id_notes) return {message: 'Note ID and is_favorite are required'};
-        // Check if the note exists
-        const checkNote = await connection.query(
-            `SELECT * FROM notes WHERE id_notes = $1`,
-            [id_notes]
-        )
-        if(checkNote.rowCount > 0){
-            const result = await connection.query(
-                `UPDATE notes SET is_favorite = false WHERE id_notes = $1 RETURNING *`,
-                [id_notes]
-            );
-            if(result.rowCount <= 0) return {message: 'Error updating favorite status'};
-            console.log("Note favorite status updated");
-            return result.rows[0];
-        }
-        return {message: 'Note does not exist'};
-    }
 }

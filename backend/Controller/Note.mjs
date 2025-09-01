@@ -6,7 +6,7 @@ export class ControllerNote {
 
     // Get All notes of a user
     getAllNotes = async (req, res) => {
-        const {id_user} = req.params;
+        const {id_user} = req.user;
         try{
             const notes = await this.ModelNotes.getAllNotes({id_user});
             if(notes){
@@ -60,7 +60,7 @@ export class ControllerNote {
 
     // Get all favorite notes of a user
     getFavoritesNotes = async (req, res) => {
-        const {id_user} = req.params;
+        const {id_user} = req.user;
         try{
             const notes = await this.ModelNotes.getFavoritesNotes({id_user});
             if(notes){
@@ -78,7 +78,7 @@ export class ControllerNote {
 
     // Create a new note
     createdNote = async (req, res) => {
-        const {id_user} = req.params;
+        const {id_user} = req.user;
         const result = ValidateDataNotes(req.body);
         try{
             if(!result.success){
@@ -141,13 +141,12 @@ export class ControllerNote {
 
     // Toggle favorite status of a note
     toggleFavorite = async (req, res) => {
-        const {id_notes} = req.params;
+        const {id_notes, is_favorite} = req.body;
         try{
-            const response = await this.ModelNotes.toggleFavorite({id_notes});
+            const response = await this.ModelNotes.toggleFavorite({id_notes, is_favorite});
             if(response){
                 return res.status(200).json({
-                    message: 'Note favorite status updated',
-                    data: response
+                   message: response.message 
                 });
             }
         }
@@ -157,21 +156,4 @@ export class ControllerNote {
         }
     }
 
-    // Toggle unfavorite status of a note
-    toggleUnfavorite = async (req, res) => {
-        const {id_notes} = req.params;
-        try{
-            const response = await this.ModelNotes.toggleUnfavorite({id_notes});
-            if(response){
-                return res.status(200).json({
-                    message: 'Note unfavorite status updated',
-                    data: response
-                });
-            }
-        }
-        catch(error){
-            console.error(error);
-            return res.status(500).json({message: 'Internal Server Error'})
-        }
-    }
 }

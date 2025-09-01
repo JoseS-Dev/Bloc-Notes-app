@@ -6,40 +6,82 @@
     import WatchIcon from '../assets/icons/WatchIcon.vue';
     import FavoritesIcon from '../assets/icons/FavoritesIcon.vue';
     import TrashIcon from '../assets/icons/TrashIcon.vue';
-
+    import type { NoteData } from '../Types/Note';
+    import {ref, onMounted} from 'vue';
+    import { getAllNotes } from '../Services/Notes';
+    
     const props = defineProps({
         title: String,
-        content: String
+        content: String,
+        token: String,
+        selectedNote: Object as () => NoteData | null,
+        searchTerm: {
+            type: String,
+            required: true
+        }
     })
+
+    const Notes = ref<NoteData[]>([]);
+    
+
+    // Function para obtener todas las notas
+    async function fetchAllNotes() {
+        try {
+            if(props.token){
+                const response = await getAllNotes(props.token);
+                console.log(response.data)
+                if(response.data){
+                    Notes.value = response.data;
+                }
+            }
+            else{
+                console.log("401 el token no se encontro")
+            }
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+        }
+    }
+
+    onMounted(() => {
+        fetchAllNotes();
+    });
+
 </script>
 
 <template>
     <main class="h-full w-3/4 border-l-2 border-blue-400 flex flex-col">
-        <Header title="All Notes" />
+        <Header title="All Notes" @search="$emit('search', $event)" />
         <section class="w-full min-h-11/12 flex">
-            <CreateNote />
+            <CreateNote 
+            :-all-notes="Notes"
+            @select-note="$emit('select-note', $event)"
+            :search-term="searchTerm"
+            />
             <article class="w-3/4 h-full flex">
                 <div class="w-4/6 h-full flex flex-col p-2 border-r-2 border-blue-400 items-center gap-1.5">
                     <div class="w-full h-auto border-b-2 border-gray-400 flex flex-col justify-center p-3 gap-3">
-                        <h2 class="text-2xl text-black tracking-normal font-semibold">React Optimization Performance</h2>
-                        <div class="w-full flex items-center gap-6">
-                            <div class="flex items-center justify-evenly gap-3">
-                                <TagsIcon/>
-                                <span class="text-lg text-gray-600">Tags</span>
+                        <div v-if="selectedNote">
+                            <h2 class="text-2xl text-black tracking-normal font-semibold">{{ selectedNote?.title_notes }}</h2>
+                            <div class="w-full flex items-center gap-6">
+                                <div class="flex items-center justify-evenly gap-3">
+                                    <TagsIcon/>
+                                    <span class="text-lg text-gray-600">Tags</span>
+                                </div>
+                                <div class="w-11/12 flex items-center gap-3">
+                                    <span class="text-lg text-gray-600">{{ selectedNote?.tags_notes }}</span>
+                                </div>
                             </div>
-                            <div class="w-11/12 flex items-center gap-3">
-                                <span class="text-lg text-gray-600">React</span>
+                            <div class="w-full flex items-center gap-6">
+                                <div class="flex items-center justify-evenly gap-2 w-1/5">
+                                    <WatchIcon/>
+                                    <span class="text-lg text-gray-600">Last Edited:</span>
+                                </div>
+                                <div class="w-1/2 flex items-center gap-3">
+                                    <span class="text-lg text-gray-600 font-bold">{{ selectedNote?.date_notes.split('T')[0] }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="w-full flex items-center gap-6">
-                            <div class="flex items-center justify-evenly gap-2 w-1/5">
-                                <WatchIcon/>
-                                <span class="text-lg text-gray-600">Last Edited:</span>
-                            </div>
-                            <div class="w-1/2 flex items-center gap-3">
-                                <span class="text-lg text-gray-600 font-bold">12 Mar, 2025</span>
-                            </div>
-                        </div>
+                        <div v-else class="w-full h-full flex justify-center items-center text-2xl text-gray-700">No hay notas seleccionadas</div>
                     </div>
                     <div class="w-full h-3/4"></div>
                     <div class="flex w-full h-1/10 border-t-2 border-gray-400 items-center gap-4 p-3">

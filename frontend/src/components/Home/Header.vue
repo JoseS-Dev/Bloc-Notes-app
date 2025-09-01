@@ -1,11 +1,20 @@
 <script setup lang="ts">
-    import { defineProps } from 'vue';
+    import { defineProps, watch } from 'vue';
     import { useRouter } from 'vue-router';
     import SettingsIcon from '../../assets/icons/SettingsIcon.vue';
+    import {ref} from 'vue';
+    import { defineEmits } from 'vue';
     const router = useRouter();
     const props = defineProps({
         title: String
     })
+    const searchQuery = ref('');
+    const emit = defineEmits(['search']);
+
+    // Watcher para emitir el query de busqueda
+    watch(searchQuery, (newQuery) => {
+        emit('search', newQuery.trim());
+    });
 </script>
 
 <template>
@@ -17,6 +26,7 @@
                 hover:border-blue-400 focus:border-blue-400 outline-none bg-gray-100
                 transition-colors duration-200 placeholder:text-gray-700 text-lg"
                 placeholder="Buscar Notas..."
+                v-model="searchQuery"
             />
             <button @click="router.push('/settings')"><SettingsIcon/></button>
         </article>

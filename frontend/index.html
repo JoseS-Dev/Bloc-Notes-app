@@ -8,15 +8,6 @@
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts">
-      import {useAuthUserStore} from './src/Store/authUserStore';
-      import {onMounted} from 'vue';
-      const authUserStore = useAuthUserStore();
-      onMounted(() => {
-          setInterval(() => {
-              authUserStore.checkAuth();
-          }, 60000);
-      });
-    </script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

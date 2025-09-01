@@ -29,6 +29,7 @@ Content-Type: application/json
 
 ### Verify a user token
 POST http://localhost:6200/api/users/Verify
+Authorization: Bearer {{$processEnv.JWT_SECRET}}
 
 ### Get all notes for a user
 GET http://localhost:6200/api/notes/all/1
@@ -42,6 +43,7 @@ GET http://localhost:6200/api/notes/favorites/1
 ### Create a new note
 POST http://localhost:6200/api/notes/create/1
 Content-Type: application/json
+Authorization: Bearer {{$processEnv.JWT_SECRET}}
 
 {
     "title_notes": "Second Note",
