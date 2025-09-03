@@ -4,6 +4,8 @@ import Home from "../Pages/Home.vue";
 import Login from "../Pages/Login.vue";
 import Register from "../Pages/Register.vue";
 import Settings from "../Pages/Settings.vue";
+import Create from "../Pages/Create.vue";
+
 
 const router = createRouter({
     history: createWebHistory(`${import.meta.env.BASE_URL}`),
@@ -28,6 +30,12 @@ const router = createRouter({
             path: '/settings',
             name: "Settings",
             component: Settings,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/create',
+            name: "Create",
+            component: Create,
             meta: {requiresAuth: true}
         }
     ]

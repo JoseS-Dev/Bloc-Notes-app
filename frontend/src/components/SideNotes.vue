@@ -1,40 +1,20 @@
 <script setup lang="ts">
-    import {ref, onMounted} from 'vue';
     import AllIcon from '../assets/icons/AllIcon.vue';
     import FavoritesIcon from '../assets/icons/FavoritesIcon.vue';
     import LogoutIcon from '../assets/icons/LogoutIcon.vue';
     import type { NoteData } from '../Types/Note';
     import { defineProps } from 'vue';
-    import { getAllNotes } from '../Services/Notes';
     import { SeparateTags } from '../utils';
     const props = defineProps({
         title: String,
         content: String,
-        token: String
-    })
-    const Notes = ref<NoteData[]>([]);
-    
-    // Function para obtener todas las notas
-    async function fetchAllNotes() {
-        try {
-            if(props.token){
-                const response = await getAllNotes(props.token);
-                console.log(response.data)
-                if(response.data){
-                    Notes.value = response.data;
-                }
-            }
-            else{
-                console.log("401 el token no se encontro")
-            }
-        } catch (error) {
-            console.error('Error fetching notes:', error);
+        token: String,
+        Notes: {
+            type: Array as () => NoteData[],
+            required: true,
+            default: () => []
         }
-    }
-
-    onMounted(() => {
-        fetchAllNotes();
-    });
+    })
 
 </script>
 
@@ -68,7 +48,7 @@
             </div>
             <div class="w-full h-11/12 flex flex-col items-center gap-2 overflow-auto p-1">
                 <div v-if="Notes.length === 0" class="flex justify-center items-center text-2xl text-gray-700">No hay notas Recientes</div>
-                <div @click="$emit('select-note', note)" v-for="note in Notes.slice(0,3)" :key="note.id_notes" class="border-2 border-blue-400 bg-gray-100 w-full text-black min-h-1/4 p-2 flex flex-col justify-around rounded-xl 
+                <div @click="$emit('select-note', note)" v-for="note in Notes" :key="note.id_notes" class="border-2 border-blue-400 bg-gray-100 w-full text-black min-h-1/4 p-2 flex flex-col justify-around rounded-xl 
                 hover:bg-blue-400 hover:text-white hover:border-black hover:scale-95 cursor-pointer transition-transform duration-200">
                     <h4 class="text-xl tracking-normal font-semibold">{{ note.title_notes }}</h4>
                     <div class="w-full flex">
@@ -76,7 +56,7 @@
                             {{ tag }}
                         </span>
                     </div>
-                    <span class="text-lg">{{ note.date_notes.split('T')[0] }}</span>
+                    <span class="text-lg">{{ note.date_notes.toString().split('T')[0] }}</span>
                 </div>
             </div>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { defineProps } from 'vue';
+    import { defineProps, defineEmits, ref } from 'vue';
     import Header from './Home/Header.vue';
     import CreateNote from './Home/CreateNote.vue';
     import TagsIcon from '../assets/icons/TagsIcon.vue';
@@ -7,10 +7,16 @@
     import FavoritesIcon from '../assets/icons/FavoritesIcon.vue';
     import TrashIcon from '../assets/icons/TrashIcon.vue';
     import type { NoteData } from '../Types/Note';
-    import {ref, onMounted} from 'vue';
-    import { getAllNotes } from '../Services/Notes';
+    import { deleteNote } from '../Services/Notes';
+    
+    import Swal from 'sweetalert2';
     
     const props = defineProps({
+        Notes: {
+            type: Array as () => NoteData[],
+            required: true,
+            default: () => []
+        },
         title: String,
         content: String,
         token: String,
@@ -20,31 +26,48 @@
             required: true
         }
     })
-
-    const Notes = ref<NoteData[]>([]);
     
-
-    // Function para obtener todas las notas
-    async function fetchAllNotes() {
-        try {
-            if(props.token){
-                const response = await getAllNotes(props.token);
-                console.log(response.data)
-                if(response.data){
-                    Notes.value = response.data;
+    const isLoading = ref<boolean>(false);
+    const emit = defineEmits([
+        'update:selectedNote',
+        'search',
+        'select-note'
+    ])
+    
+    // Function para eliminar una nota
+    const handleDeleteNote = async (data: NoteData) => {
+        
+        isLoading.value = true
+        try{
+           const WindowDeleted = await Swal.fire({
+            icon: 'warning',
+            title: '¿Estás seguro que quieres eliminar esta nota?',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+           })
+           if(WindowDeleted.isConfirmed){
+            const response = await deleteNote(data.id_notes)
+            if(response.message){
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Nota eliminada',
+                    text: 'La nota ha sido eliminada exitosamente.',
+                });
+                if (data.id_notes === props.selectedNote?.id_notes) {
+                    emit('update:selectedNote', data.id_notes);
                 }
             }
-            else{
-                console.log("401 el token no se encontro")
-            }
-        } catch (error) {
-            console.error('Error fetching notes:', error);
+           }
+        }
+        catch(error){
+            console.error('Error deleting note:', error);
+        }
+        finally {
+            isLoading.value = false;
         }
     }
 
-    onMounted(() => {
-        fetchAllNotes();
-    });
 
 </script>
 
@@ -77,13 +100,15 @@
                                     <span class="text-lg text-gray-600">Last Edited:</span>
                                 </div>
                                 <div class="w-1/2 flex items-center gap-3">
-                                    <span class="text-lg text-gray-600 font-bold">{{ selectedNote?.date_notes.split('T')[0] }}</span>
+                                    <span class="text-lg text-gray-600 font-bold">{{ selectedNote?.date_notes.toString().split('T')[0] }}</span>
                                 </div>
                             </div>
                         </div>
                         <div v-else class="w-full h-full flex justify-center items-center text-2xl text-gray-700">No hay notas seleccionadas</div>
                     </div>
-                    <div class="w-full h-3/4"></div>
+                    <div class="w-full h-3/4 px-1">
+                        <p class="text-lg text-gray-600">{{ selectedNote?.description_notes }}</p>
+                    </div>
                     <div class="flex w-full h-1/10 border-t-2 border-gray-400 items-center gap-4 p-3">
                         <button 
                         class="w-40 h-15 bg-blue-600 rounded-2xl
@@ -97,11 +122,13 @@
                     </div>
                 </div>
                 <div class="w-2/6 h-full flex flex-col items-center p-5 gap-2">
-                    <button class="w-11/12 h-14 border-2 border-black rounded-2xl text-black text-lg
+                    <button
+                    @click="selectedNote ? handleDeleteNote(selectedNote) : null" 
+                    class="w-11/12 h-14 border-2 border-black rounded-2xl text-black text-lg
                     hover:bg-blue-600 hover:text-white hover:scale-95 transition-transform duration-200 
                     flex items-center justify-center cursor-pointer gap-3">
                         <TrashIcon />
-                        Eliminar Nota
+                        {{ isLoading ? 'Eliminando...' : 'Eliminar Nota' }}
                     </button>
                     <button class="w-11/12 h-14 border-2 border-black rounded-2xl text-black text-lg
                     hover:bg-blue-600 hover:text-white hover:scale-95 transition-transform duration-200

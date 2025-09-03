@@ -1,4 +1,4 @@
-import type { NoteData } from "../Types/Note";
+import type { CreateNoteData, NoteData } from "../Types/Note";
 // Funcion que obtiene todas las notas de usuario
 export async function getAllNotes(token: string){
     try {
@@ -38,7 +38,7 @@ export async function getFavoritesNotes(token: string){
 }
 
 // Function para crear una nota
-export async function createNote(token: string, data: NoteData){
+export async function createNewNote(token: string, data: CreateNoteData){
     try{
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/create`, {
             method: 'POST',
