@@ -133,8 +133,8 @@ export class ModelNotes {
     // Mark a note as favorite
     static async toggleFavorite({id_notes, is_favorite}){
         if(!id_notes) return {message: 'Note ID is required'};
-        if(is_favorite === undefined || is_favorite === null) return {message: 'is_favorite value is required'};
-
+        if(typeof is_favorite !== 'boolean') return {message: 'is_favorite must be a boolean'};
+        
         // Check if the note exists
         const checkNote = await connection.query(
             `SELECT * FROM notes WHERE id_notes = $1`,
@@ -143,11 +143,11 @@ export class ModelNotes {
         if(checkNote.rowCount > 0){
             console.log("Process to update favorite status");
             const result = await connection.query(
-                `UPDATE notes SET is_favorite = $1 WHERE id_user = $2`,
+                `UPDATE notes SET is_favorite = $1 WHERE id_notes = $2`,
                 [is_favorite, id_notes]
             )
             if(result.rowCount <= 0) return {message: 'Error updating favorite status'};
-            return {message: 'Favorite status updated'};
+            return checkNote.rows[0];
         }
     }
 

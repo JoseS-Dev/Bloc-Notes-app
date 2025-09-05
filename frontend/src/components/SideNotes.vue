@@ -51,7 +51,7 @@
                 <div @click="$emit('select-note', note)" v-for="note in Notes" :key="note.id_notes" class="border-2 border-blue-400 bg-gray-100 w-full text-black min-h-1/4 p-2 flex flex-col justify-around rounded-xl 
                 hover:bg-blue-400 hover:text-white hover:border-black hover:scale-95 cursor-pointer transition-transform duration-200">
                     <h4 class="text-xl tracking-normal font-semibold">{{ note.title_notes }}</h4>
-                    <div class="w-full flex">
+                    <div class="w-full flex gap-2">
                         <span v-for="(tag, index) in SeparateTags(note.tags_notes)" :key="index" class="border-2 border-gray-600 text-center bg-gray-200 text-md p-1 w-auto">
                             {{ tag }}
                         </span>

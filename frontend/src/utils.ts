@@ -31,3 +31,12 @@ export function SeparateTags(tags: string){
     if(!tags) return [];
     return tags.split(',').map(tag => tag.trim());
 }
+
+// constantes para los colores de las notas favoritas
+export const favoritesNotes = `w-11/12 h-14 border-2 border-black rounded-2xl  text-lg
+                    bg-blue-500 text-whitehover:bg-blue-200 hover:text-black hover:scale-95 transition-transform duration-200
+                    flex items-center justify-center cursor-pointer gap-3`;
+
+export const BaseNotes = `w-11/12 h-14 border-2 border-black rounded-2xl text-black text-lg
+                    hover:bg-blue-600 hover:text-white hover:scale-95 transition-transform duration-200
+                    flex items-center justify-center cursor-pointer gap-3`

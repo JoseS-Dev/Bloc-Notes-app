@@ -67,7 +67,10 @@ Content-Type: application/json
 DELETE http://localhost:6200/api/notes/delete/1
 
 ### Make a note favorite
-PATCH http://localhost:6200/api/notes/favorite/2
+PATCH http://localhost:6200/api/notes/favorite
+Content-Type: application/json
 
-### unmake a note favorite
-PATCH http://localhost:6200/api/notes/unfavorite/2
+{
+    "id_notes": 14,
+    "is_favorite": true
+}

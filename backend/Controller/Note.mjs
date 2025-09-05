@@ -146,7 +146,8 @@ export class ControllerNote {
             const response = await this.ModelNotes.toggleFavorite({id_notes, is_favorite});
             if(response){
                 return res.status(200).json({
-                   message: response.message 
+                   message: 'Favorite status updated',
+                   data: response
                 });
             }
         }

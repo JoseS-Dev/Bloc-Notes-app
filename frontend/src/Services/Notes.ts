@@ -1,4 +1,4 @@
-import type { CreateNoteData, NoteData } from "../Types/Note";
+import type { CreateNoteData, UpdateNoteData } from "../Types/Note";
 // Funcion que obtiene todas las notas de usuario
 export async function getAllNotes(token: string){
     try {
@@ -59,13 +59,14 @@ export async function createNewNote(token: string, data: CreateNoteData){
 }
 
 // Function para actaulizar una nota
-export async function updateNote(data: NoteData){
+export async function updateNote(id_notes:number,data: UpdateNoteData){
     try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/update/${data.id_notes}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/update/${id_notes}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(data)
         })
         if(!response.ok) throw new Error('Failed to update note');
         const result = await response.json();
@@ -95,7 +96,7 @@ export async function deleteNote(id_notes: number){
 }
 
 // Function para marcar o desamarcar una nota de favoritos
-export async function toggleFavorite(id_notes: number, is_favorite: number){
+export async function toggleFavorite(id_notes: number, is_favorite: boolean){
     try{
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes/favorite`, {
             method: 'PATCH',
