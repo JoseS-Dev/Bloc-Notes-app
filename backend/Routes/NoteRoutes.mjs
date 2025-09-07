@@ -9,12 +9,13 @@ const controllernote = new ControllerNote({ModelNotes: ModelNotes});
 // ROUTES
 // Get All notes of a user
 RoutesNote.get('/all',verifiyMiddlware, controllernote.getAllNotes);
+// Get all favorite notes of a user
+RoutesNote.get('/favorites',verifiyMiddlware,controllernote.getFavoritesNotes);
 // Get a Notes by id
 RoutesNote.get('/:id_notes', controllernote.getNoteById);
 // Get a note by date and user id
 RoutesNote.get('/user/:id_user/date/:date_notes', controllernote.getNoteByDate);
-// Get all favorite notes of a user
-RoutesNote.get('/favorites',verifiyMiddlware,controllernote.getFavoritesNotes);
+
 
 // Create a new note
 RoutesNote.post('/create', verifiyMiddlware, controllernote.createdNote);

@@ -61,6 +61,7 @@ export class ControllerNote {
     // Get all favorite notes of a user
     getFavoritesNotes = async (req, res) => {
         const {id_user} = req.user;
+        
         try{
             const notes = await this.ModelNotes.getFavoritesNotes({id_user});
             if(notes){

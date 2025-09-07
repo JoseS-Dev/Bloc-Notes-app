@@ -25,22 +25,22 @@
             <LogoutIcon/>
         </article>
         <article class='w-full h-1/5 flex flex-col items-center border-b-2 border-blue-600 p-1 justify-evenly'>
-            <button 
+            <a href="/notes" 
             class="flex items-center gap-4 px-3 w-11/12  bg-blue-600 
             h-13 text-xl font-semibold tracking-wider hover:bg-blue-200 hover:text-black hover:scale-95 rounded-2xl
             transition-transform duration-300 cursor-pointer"
             >
                 <AllIcon/>
                 All Notes
-            </button>
-            <button 
+            </a>
+            <a href="/favorites"
             class="flex items-center gap-2 px-2 w-11/12  h-13 bg-blue-600 text-xl
             font-semibold tracking-wider hover:bg-blue-200 hover:text-black hover:scale-95 rounded-2xl
             transition-transform duration-300 cursor-pointer"
             >
                 <FavoritesIcon/>
                 Notas Favoritas
-            </button>
+            </a>
         </article>
         <article class="w-full h-4/5 p-2 flex flex-col items-center gap-1.5">
             <div class="w-full h-11 border-b-2 border-gray-500 px-2 flex flex-col justify-center">

@@ -5,6 +5,7 @@ import Login from "../Pages/Login.vue";
 import Register from "../Pages/Register.vue";
 import Settings from "../Pages/Settings.vue";
 import Create from "../Pages/Create.vue";
+import Favorites from "../Pages/Favorites.vue";
 
 
 const router = createRouter({
@@ -36,6 +37,12 @@ const router = createRouter({
             path: '/create',
             name: "Create",
             component: Create,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/favorites',
+            name: "Favorites",
+            component: Favorites,
             meta: {requiresAuth: true}
         }
     ]
